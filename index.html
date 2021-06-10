@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>PFSRopeSkipping</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <script src="Build/UnityLoader.js"></script>
+	<script>
+	function UnityProgress(gameInstance, progress) {
+  if (!gameInstance.Module)
+    return;
+  if (!gameInstance.logo) {
+    gameInstance.logo = document.createElement("div");
+    gameInstance.logo.className = "logo " + gameInstance.Module.splashScreenStyle;
+    gameInstance.container.appendChild(gameInstance.logo);
+  }
+  if (!gameInstance.progress) {    
+    gameInstance.progress = document.createElement("div");
+    gameInstance.progress.className = "progress " + gameInstance.Module.splashScreenStyle;
+    gameInstance.progress.empty = document.createElement("div");
+    gameInstance.progress.empty.className = "empty";
+    gameInstance.progress.appendChild(gameInstance.progress.empty);
+    gameInstance.progress.full = document.createElement("div");
+    gameInstance.progress.full.className = "full";
+    gameInstance.progress.appendChild(gameInstance.progress.full);
+    gameInstance.container.appendChild(gameInstance.progress);
+  }
+  gameInstance.progress.full.style.width = (100 * progress) + "%";
+  gameInstance.progress.empty.style.width = (100 * (1 - progress)) + "%";
+  if (progress == 1) {
+	var check = UnityLoader.SystemInfo.mobile;
+	var send = '';
+	if(check)
+	{
+		send = 'mobile';
+	}
+	else
+	{
+		send = 'pc';
+	}
+	gameInstance.SendMessage("GM","checkmobile",send);
+    gameInstance.logo.style.display = gameInstance.progress.style.display = "none";
+  }
+}
+	</script>
+    <script>
+        var gameInstance = UnityLoader.instantiate("gameContainer", "Build/pfsSkipping.json", {onProgress: UnityProgress});
+    </script>
+</head>
+<body>
+<div class="webgl-content">
+    <div id="gameContainer" style="width: 1920px; height: 1080px"></div>
+</div>
+<script src="TemplateData/responsive.javascript"></script>
+</body>
+</html>
